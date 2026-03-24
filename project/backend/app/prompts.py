@@ -15,3 +15,16 @@ Vastuse struktuur:
 2. Praktilised soovitused
 3. Vajadusel märkus ametlike allikate kohta
 """
+
+def build_user_prompt(question: str, contexts: list[str]) -> str:
+    joined_context = "\n\n---\n\n".join(contexts)
+
+    return f"""
+Kasutaja küsimus:
+{question}
+
+Teadmistebaasist leitud kontekst:
+{joined_context}
+
+Palun vasta eesti keeles väikettevõtjale arusaadavalt ja praktiliselt.
+"""
