@@ -1,14 +1,14 @@
 import os
 from pathlib import Path
 
-from fastapi import FastAPI
 from dotenv import load_dotenv
+from fastapi import FastAPI
 from openai import OpenAI
 
-from models import ChatRequest, ChatResponse
-from kb_loader import load_knowledge_base
-from rag import SimpleRAG
-from prompts import SYSTEM_PROMPT, build_user_prompt
+from app.models import ChatRequest, ChatResponse
+from app.kb_loader import load_knowledge_base
+from app.rag import SimpleRAG
+from app.prompts import SYSTEM_PROMPT, build_user_prompt
 
 load_dotenv()
 
