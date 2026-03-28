@@ -31,6 +31,16 @@ def root():
 @app.post("/chat", response_model=ChatResponse)
 def chat(request: ChatRequest):
     results = rag.search(request.question, top_k=3)
+    print("Kasutaja küsimus:", request.question)
+    for item in results:
+        print(
+            "Leitud:",
+            item["document"]["filename"],
+            "| chunk:",
+            item["document"]["chunk_id"],
+            "| score:",
+            round(item["score"], 3),
+        )
     contexts = [r["document"]["content"] for r in results]
 
     response = client.chat.completions.create(
