@@ -7,34 +7,57 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="app">
-    <header class="header">
-      <h1>AI-põhine nõustamisplatvorm</h1>
-      <p>Eesti väikeettevõtjatele</p>
-    </header>
-
-    <main class="chat-container">
-      <div id="chatBox" class="chat-box">
-        <div class="message bot">
-          Tere! Küsi minult turunduse, ettevõtluse või Eesti ettevõtluskonteksti kohta.
-        </div>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="sidebar-top">
+        <h1>AI Nõustaja</h1>
+        <p>Eesti väikeettevõtjatele</p>
       </div>
 
-      <div class="examples">
+      <div class="sidebar-section">
+        <h2>Näidisküsimused</h2>
         <button class="example-btn">Kuidas leida oma ettevõttele sihtrühm?</button>
         <button class="example-btn">Kuidas oma teenust hinnastada?</button>
         <button class="example-btn">Mis vahe on OÜ-l ja FIE-l?</button>
       </div>
 
-      <form id="chatForm" class="chat-form">
-        <textarea
-          id="questionInput"
-          placeholder="Kirjuta oma küsimus siia..."
-          rows="3"
-          required
-        ></textarea>
-        <button type="submit">Saada</button>
-      </form>
+      <div class="sidebar-section muted">
+        <p>
+          Prototüüp vastab turunduse, ettevõtluse ja Eesti ettevõtluskonteksti teemadel.
+        </p>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div>
+          <h2>Vestlus</h2>
+          <p>Küsi praktilist nõu oma ettevõtte jaoks</p>
+        </div>
+      </header>
+
+      <section id="chatBox" class="chat-box">
+        <div class="message-row bot-row">
+          <div class="avatar bot-avatar">AI</div>
+          <div class="message bot">
+            Tere! Küsi minult turunduse, ettevõtluse või Eesti ettevõtluskonteksti kohta.
+          </div>
+        </div>
+      </section>
+
+      <footer class="input-area">
+        <form id="chatForm" class="chat-form">
+          <div class="input-wrapper">
+            <textarea
+              id="questionInput"
+              placeholder="Kirjuta oma küsimus siia..."
+              rows="1"
+              required
+            ></textarea>
+            <button type="submit">Saada</button>
+          </div>
+        </form>
+      </footer>
     </main>
   </div>
 
