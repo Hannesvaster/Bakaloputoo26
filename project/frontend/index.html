@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="et">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Nõustamisplatvorm</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app">
+    <header class="header">
+      <h1>AI-põhine nõustamisplatvorm</h1>
+      <p>Eesti väikeettevõtjatele</p>
+    </header>
+
+    <main class="chat-container">
+      <div id="chatBox" class="chat-box">
+        <div class="message bot">
+          Tere! Küsi minult turunduse, ettevõtluse või Eesti ettevõtluskonteksti kohta.
+        </div>
+      </div>
+
+      <div class="examples">
+        <button class="example-btn">Kuidas leida oma ettevõttele sihtrühm?</button>
+        <button class="example-btn">Kuidas oma teenust hinnastada?</button>
+        <button class="example-btn">Mis vahe on OÜ-l ja FIE-l?</button>
+      </div>
+
+      <form id="chatForm" class="chat-form">
+        <textarea
+          id="questionInput"
+          placeholder="Kirjuta oma küsimus siia..."
+          rows="3"
+          required
+        ></textarea>
+        <button type="submit">Saada</button>
+      </form>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
