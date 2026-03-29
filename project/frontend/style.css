@@ -177,6 +177,28 @@ body {
   border: 1px solid #bfdbfe;
 }
 
+.message-text {
+  margin-bottom: 10px;
+}
+
+.sources {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border);
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.source-tag {
+  display: inline-block;
+  margin: 6px 6px 0 0;
+  padding: 4px 8px;
+  background: #f3f4f6;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  color: #374151;
+}
+
 .input-area {
   position: sticky;
   bottom: 0;

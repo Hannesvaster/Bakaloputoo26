@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>AI Nõustamisplatvorm</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="/static/style.css" />
 </head>
 <body>
   <div class="app-shell">
@@ -19,11 +19,12 @@
         <button class="example-btn">Kuidas leida oma ettevõttele sihtrühm?</button>
         <button class="example-btn">Kuidas oma teenust hinnastada?</button>
         <button class="example-btn">Mis vahe on OÜ-l ja FIE-l?</button>
+        <button class="example-btn">Millal peab käibemaksukohustuslasena registreerima?</button>
       </div>
 
       <div class="sidebar-section muted">
         <p>
-          Prototüüp vastab turunduse, ettevõtluse ja Eesti ettevõtluskonteksti teemadel.
+          Prototüüp kasutab teadmistebaasi, retrievalit ja suurt keelemudelit.
         </p>
       </div>
     </aside>
@@ -40,7 +41,9 @@
         <div class="message-row bot-row">
           <div class="avatar bot-avatar">AI</div>
           <div class="message bot">
-            Tere! Küsi minult turunduse, ettevõtluse või Eesti ettevõtluskonteksti kohta.
+            <div class="message-text">
+              Tere! Küsi minult turunduse, ettevõtluse, maksude või Eesti ettevõtluskonteksti kohta.
+            </div>
           </div>
         </div>
       </section>
@@ -61,6 +64,6 @@
     </main>
   </div>
 
-  <script src="script.js"></script>
+  <script src="/static/script.js"></script>
 </body>
 </html>

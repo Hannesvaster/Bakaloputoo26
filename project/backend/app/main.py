@@ -2,8 +2,10 @@ import os
 from pathlib import Path
 
 from dotenv import load_dotenv
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
 from openai import OpenAI
 
 from app.kb_loader import load_knowledge_base
@@ -13,8 +15,9 @@ from app.rag import SimpleRAG
 
 BASE_DIR = Path(__file__).resolve().parent
 PROJECT_ROOT = BASE_DIR.parent.parent
-ENV_PATH = BASE_DIR.parent / ".env"
+ENV_PATH = PROJECT_ROOT / ".env"
 KB_PATH = PROJECT_ROOT / "knowledge_base"
+FRONTEND_PATH = PROJECT_ROOT / "frontend"
 
 load_dotenv(dotenv_path=ENV_PATH)
 
@@ -32,19 +35,34 @@ documents = load_knowledge_base(str(KB_PATH))
 rag = SimpleRAG(documents)
 
 api_key = os.getenv("OPENAI_API_KEY")
-client = OpenAI(api_key=api_key)
+client = OpenAI(api_key=api_key) if api_key else None
+
+# Staatiliste failide teenindamine
+app.mount("/static", StaticFiles(directory=str(FRONTEND_PATH)), name="static")
 
 
 @app.get("/")
-def root():
+def serve_frontend():
+    return FileResponse(FRONTEND_PATH / "index.html")
+
+
+@app.get("/health")
+def health():
     return {
-        "message": "AI nõustamisplatvorm töötab",
+        "status": "ok",
         "knowledge_base_documents": len(documents),
+        "api_key_loaded": bool(api_key),
     }
 
 
 @app.post("/chat", response_model=ChatResponse)
 def chat(request: ChatRequest):
+    if client is None:
+        raise HTTPException(
+            status_code=500,
+            detail="OPENAI_API_KEY puudub või .env faili ei loetud sisse."
+        )
+
     results = rag.search(request.question, top_k=3)
 
     contexts = [item["document"]["content"] for item in results]

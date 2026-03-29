@@ -3,14 +3,14 @@ const chatForm = document.getElementById("chatForm");
 const questionInput = document.getElementById("questionInput");
 const exampleButtons = document.querySelectorAll(".example-btn");
 
-const API_URL = "http://127.0.0.1:8000/chat";
+const API_URL = "/chat";
 
 function autoResizeTextarea() {
   questionInput.style.height = "auto";
   questionInput.style.height = `${questionInput.scrollHeight}px`;
 }
 
-function createMessageRow(text, sender) {
+function createMessageRow(sender, text, sources = []) {
   const row = document.createElement("div");
   row.classList.add("message-row", sender === "user" ? "user-row" : "bot-row");
 
@@ -20,7 +20,26 @@ function createMessageRow(text, sender) {
 
   const message = document.createElement("div");
   message.classList.add("message", sender);
-  message.textContent = text;
+
+  const textBlock = document.createElement("div");
+  textBlock.classList.add("message-text");
+  textBlock.textContent = text;
+  message.appendChild(textBlock);
+
+  if (sender === "bot" && sources.length > 0) {
+    const sourcesBlock = document.createElement("div");
+    sourcesBlock.classList.add("sources");
+    sourcesBlock.innerHTML = "<strong>Kasutatud kontekst:</strong>";
+
+    sources.forEach((source) => {
+      const tag = document.createElement("span");
+      tag.classList.add("source-tag");
+      tag.textContent = source;
+      sourcesBlock.appendChild(tag);
+    });
+
+    message.appendChild(sourcesBlock);
+  }
 
   if (sender === "user") {
     row.appendChild(message);
@@ -37,9 +56,9 @@ function createMessageRow(text, sender) {
 }
 
 async function sendQuestion(question) {
-  createMessageRow(question, "user");
-  const loadingRow = createMessageRow("Vastus koostatakse...", "bot");
-  loadingRow.querySelector(".message").classList.add("loading");
+  createMessageRow("user", question);
+  const loadingRow = createMessageRow("bot", "Vastus koostatakse...");
+  loadingRow.querySelector(".message-text").classList.add("loading");
 
   try {
     const response = await fetch(API_URL, {
@@ -57,10 +76,10 @@ async function sendQuestion(question) {
     const data = await response.json();
     loadingRow.remove();
 
-    createMessageRow(data.answer, "bot");
+    createMessageRow("bot", data.answer, data.retrieved_context || []);
   } catch (error) {
     loadingRow.remove();
-    createMessageRow("Midagi läks valesti. Kontrolli, kas backend töötab.", "bot");
+    createMessageRow("bot", "Midagi läks valesti. Kontrolli, kas backend töötab.");
     console.error(error);
   }
 }
